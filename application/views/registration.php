@@ -47,7 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <?php $attributes = array('class' => 'theme-form', 'id' => 'add-form', 'name' => 'add-form', 'enctype' => 'multipart/form-data');
                 echo form_open(base_url("registration/submitForm"), $attributes); ?>
                 <div class="container-fluid">
-                    <div class="row ">
+                    <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Name</label>
                             <input name="name" type="text" class="form-control shadow-none" required>
@@ -90,8 +90,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                         <!-- Address details -->
 
-                        <div id="addressFields" class="addressFields" row_count="1">
-                            <div class="row mb-3">
+                        <div id="addressFields" class="addressFields">
+                            <div class="row mb-3 addaddressrow" row_count="1">
                                 <div class="col-md-12">
                                     <label class="form-label">Address line</label>
 
@@ -319,11 +319,61 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     });
 
+    $(document).on("click", ".addAddressline", function () {
 
+        var row_count = $(".addaddressrow:last-child").attr('row_count');
 
-$.(".addAddressline").onclick(function(){
-    
+        //?add-form?var total_row_count =$(this).value();
+        if (!$("#address" + row_count).val()) {
+            alert("Please Enter the address first!");
+            return false;
+        }
+        if (!$("#country" + row_count).val()) {
+            alert("please select the country");
+            return false;
+        }
+        if (!$("#state_" + row_count).val()) {
+            alert("please select the state");
+            return false;
 
-});
+        }
+        if (!$("#city_" + row_count).val()) {
+            alert("please select the city ")
+            return false;
+        }
+        row_count++;
+
+        var html = '<div class="row mb-3 addaddressrow" row_count="'+row_count+'">' +
+            '< div class="col-md-12" >' +
+            '<label class="form-label">Address line</label>' +
+            '<textarea id="address_'+row_count+'" name="address_'+row_count+'" class="form-control shadow-none" rows="1" required></textarea>' +
+            '</div >' +
+            '<div class="col-md-4 mb-3 mt-2">' +
+            '<label class="form-label">Country</label>' +
+            
+            <?php
+            
+            $options = array('' => 'Select Country');
+            foreach ($countries as $row) {
+                $options[$row->id] = $row->name;
+            }
+            echo form_dropdown("country", $options, '', 'id="country_1" class="form-select country" aria-label="Default select example" row_count="1"');
+           
+           ?>
+        '</div>' +
+            '<div class="col-md-4 mt-2">' +
+            '<label class="form-label">State</label>' +
+            '<select id="state_1" name="state_1" class="form-select state" aria-label="Default select example" row_count="1">' +
+            '<option value="">Select state</option>' +
+            '</select>' +
+            '</div>' +
+            '<div class="col-md-4 mt-2">' +
+            ' <label class="form-label">City</label>' +
+            '<select id="city_1" name="city_1" class="form-select" aria-label="Default select example" row_count="1">' +
+            '<option value="">Select city</option>' +
+            '</select>' +
+            '</div>' +
+            ' </div > ';
+    });
 
 </script>
