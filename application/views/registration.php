@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <!-- Address details -->
 
                         <div id="addressFields" class="addressFields">
-                            <div class="row mb-3 addaddressrow" row_count="1">
+                            <div class="row mb-3 addaddressrow" id="addressdivrow_1" row_count="1">
                                 <div class="col-md-12">
                                     <label class="form-label">Address line</label>
 
@@ -129,8 +129,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <button type="button" class="btn btn-outline-dark shadow-none addAddressline"
                                 row_count="1">Add
                                 more</button>
-                            <button name="remove" type="button" onclick="removeAddressLine()"
-                                class="btn btn-outline-dark shadow-none" row_count="1">Remove
+                            <button name="remove" type="button" 
+                                class="btn btn-outline-dark shadow-none removeaddressrow" row_count="1">Remove
                             </button>
                         </div>
                     </div>
@@ -324,11 +324,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         var row_count = $(".addaddressrow:last-child").attr('row_count');
 
         //?add-form?var total_row_count =$(this).value();
-        if (!$("#address" + row_count).val()) {
+        if (!$("#address_" + row_count).val()) {
             alert("Please Enter the address first!");
             return false;
         }
-        if (!$("#country" + row_count).val()) {
+        if (!$("#country_" + row_count).val()) {
             alert("please select the country");
             return false;
         }
@@ -343,37 +343,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
         row_count++;
 
-        var html = '<div class="row mb-3 addaddressrow" row_count="'+row_count+'">' +
-            '< div class="col-md-12" >' +
+        var html = '<div class="row mb-3 addaddressrow" id="addressdivrow_' + row_count + '" row_count="' + row_count + '">' +
+            '<div class="col-md-12">' +
             '<label class="form-label">Address line</label>' +
-            '<textarea id="address_'+row_count+'" name="address_'+row_count+'" class="form-control shadow-none" rows="1" required></textarea>' +
-            '</div >' +
+            '<textarea id="address_' + row_count + '" name="address_' + row_count + '" class="form-control shadow-none" rows="1" row_count="' + row_count + '" required></textarea>' +
+            '</div>' +
             '<div class="col-md-4 mb-3 mt-2">' +
             '<label class="form-label">Country</label>' +
-            
-            <?php
-            
-            $options = array('' => 'Select Country');
-            foreach ($countries as $row) {
-                $options[$row->id] = $row->name;
-            }
-            echo form_dropdown("country", $options, '', 'id="country_1" class="form-select country" aria-label="Default select example" row_count="1"');
-           
-           ?>
-        '</div>' +
-            '<div class="col-md-4 mt-2">' +
+            '<select id="country_' + row_count + '" name="country_' + row_count + '" class="form-select country"  aria-label="Default select example" row_count="' + row_count + '">' +
+            '<option>Select Country</option>' +
+
+            '<?php foreach ($countries as $row) { ?>' +
+
+                "<option value='<?= $row->id ?>'><?= $row->name ?> </option>" +
+
+                '<?php } ?>' +
+            '</select>' +
+            '</div>' +
+            '<div class="col-md-4 mb-3 mt-2">' +
             '<label class="form-label">State</label>' +
-            '<select id="state_1" name="state_1" class="form-select state" aria-label="Default select example" row_count="1">' +
+            '<select id="state_' + row_count + '" name="state_' + row_count + '" class="form-select state" aria-label="Default select example" row_count="' + row_count + '">' +
             '<option value="">Select state</option>' +
             '</select>' +
             '</div>' +
-            '<div class="col-md-4 mt-2">' +
+            '<div class="col-md-4 mb-3 mt-2">' +
             ' <label class="form-label">City</label>' +
-            '<select id="city_1" name="city_1" class="form-select" aria-label="Default select example" row_count="1">' +
+            '<select id="city_' + row_count + '" name="city_' + row_count + '" class="form-select" aria-label="Default select example" row_count="' + row_count + '">' +
             '<option value="">Select city</option>' +
             '</select>' +
             '</div>' +
             ' </div > ';
+
+
+        $('#addressFields').append(html);
+
+    });
+
+    $(document).on("click",".removeaddressrow" ,function(){
+
+        var div_row_count = $(".addaddressrow").length;
+        var row_count = $(this).attr("row_count");
+
+       
+        if(div_row_count=='1')
+        {
+            alert("you have reached the limits");
+        }
+        else{
+          
+          
+            if($("#addressdivrow_"+row_count).remove()){
+                alert("done");
+            }
+            else
+            {
+                alert("somewent wrongh")
+            }
+        }
+
     });
 
 </script>
