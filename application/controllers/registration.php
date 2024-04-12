@@ -94,42 +94,37 @@ class registration extends CI_Controller
 
 					$error = array('error' => $this->upload->display_errors());
 					echo json_encode(array('error' => $error));
-
-				} 
-				else {
-					$dataa = $this->upload->data();
-
-					$img_path = base_url('upload/' . $dataa['file_name']);
-
-					$user_table = "user_dtl";
-					$address_table = "address_dtl";
-
-					$data["picture"] = $img_path;
-
-					$user_id = $this->common->insertData($user_table, $data);
-
-					// $address_data['user_id'] = $user_id;
-					// echo "<pre>";
-					// print_r($);
-					// exit;
-					foreach ($_POST['address'] as $key => $value) {
-
-						$address_data = array();
-						$address_data['user_id'] = $user_id;
-						$address_data['address'] = $value;
-						$address_data['country_id'] = $_POST['country'][$key];
-						$address_data['state_id'] = $_POST['country'][$key];
-						$address_data['city_id'] = $_POST['city'][$key];
-
-						$this->common->insertData($address_table, $address_data);
-						
-					}
-					return 1;
 					exit;
-
 				}
 
+				$dataa = $this->upload->data();
 
+				$img_path = base_url('upload/' . $dataa['file_name']);
+
+				$user_table = "user_dtl";
+				$address_table = "address_dtl";
+
+				$data["picture"] = $img_path;
+
+				$user_id = $this->common->insertData($user_table, $data);
+
+				// $address_data['user_id'] = $user_id;
+				// echo "<pre>";
+				// print_r($);
+				// exit;
+				foreach ($_POST['address'] as $key => $value) {
+
+					$address_data = array();
+					$address_data['user_id'] = $user_id;
+					$address_data['address'] = $value;
+					$address_data['country_id'] = $_POST['country'][$key];
+					$address_data['state_id'] = $_POST['country'][$key];
+					$address_data['city_id'] = $_POST['city'][$key];
+
+					$this->common->insertData($address_table, $address_data);
+
+				}
+				return 1;
 
 			}
 		}
