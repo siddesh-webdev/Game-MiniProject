@@ -47,6 +47,20 @@ class Common extends CI_Model{
         return $output;
     }
 
+    function insertData($tbl_name, $data_array) {
+		
+		$result_id = "";
+		$this->db->insert($tbl_name, $data_array);
+		$result_id = $this->db->insert_id();
+		if($result_id > 0) {
+			
+			return $result_id;
+		}else{
+			return false;
+		}
+	}
+
+    
 }
 
 
