@@ -59,7 +59,8 @@ class registration extends CI_Controller
 			if ($this->form_validation->run() == FALSE) {
 				echo json_encode(array("error" => $this->form_validation->error_array()));
 				exit;
-			} else {
+			} 
+			else {
 				// echo "<pre>";
 				// print_r($_POST["city"]);
 				// print_r($_POST["country"]);
@@ -67,7 +68,7 @@ class registration extends CI_Controller
 				// print_r($_FILES);
 				// exit;
 				$data = array();
-				$address_data = array();
+				
 				$data["name"] = $this->input->post("name");
 				$data["email"] = $this->input->post("email");
 				$data["phone"] = $this->input->post("contact");
@@ -124,9 +125,11 @@ class registration extends CI_Controller
 					$this->common->insertData($address_table, $address_data);
 
 				}
-				return 1;
+				
+				echo json_encode(array('status' => true,'message' =>"Registeration Successfully"));
 
 			}
+			
 		}
 	}
 }

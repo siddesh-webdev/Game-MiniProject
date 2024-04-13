@@ -30,9 +30,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
         .h-font {
             font-family: 'Merienda', cursive;
         }
+
         .error {
             color: #F00;
-            text-decoration-color:: #FFF;
+            text-decoration-color: : #FFF;
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 80px;
+            right: 25px;
         }
     </style>
 </head>
@@ -149,25 +156,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 </html>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-<!-- 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/jquery.form-validator.min.js"
-    integrity="sha512-7+hQkXGIswtBWoGbyajZqqrC8sa3OYW+gJw5FzW/XzU/lq6kScphPSlj4AyJb91MjPkQc+mPQ3bZ90c/dcUO5w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/localization/messages_ar.min.js"
-    integrity="sha512-rLFPpaF3u7n96Yj1paoZ5GBSAGR1ETxKo0T+kD8XHlyj1dDSMBwC7EPavNWpHUTqVKMI2F8yc9mlDSUCWaztRQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
 <script src="https://malsup.github.io/jquery.form.js"></script>
 
 <script>
+
     var Vrules = {
         name: {
             required: true,
@@ -226,7 +221,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         submitHandler: function (form) {
             var act = "<?php echo base_url() ?>registration/submitForm";
-
             $("#add-form").ajaxSubmit({
                 url: act,
                 type: 'POST',
@@ -235,25 +229,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 clearForm: false,
                 success: function (response) {
                     if (response.status) {
-                        alert("hello");
+                        alerts('success', response.message);
+
                         setTimeout(function () {
+
                             window.location = "<?php echo base_url('registration') ?>";
 
-                        }, 500);
-                        alert("hello");
+                        }, 1000);
+
                     } else {
 
-                        alert("failed to register");
+                        alerts('error', "Server Down");
                     }
-                   
+
                 },
                 error: function (response) {
-                    // $(".loader-wrapper").fadeOut();
-                    // customtoater('error', "OOPS Something Went Wrong !!");
-                    // $(".save").attr("disabled", false);
-                    // return false;
-                   alert(response);
-                   console.log(response);
+                    alert(response);
+                    console.log(response);
                 },
             });
         }

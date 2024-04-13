@@ -17,7 +17,7 @@
                 </ul>
                 <div class="d-flex">
                     <a href="<?php echo base_url();?>login/loginPage" class="btn btn-outline-dark shadow-none me-lg-3 me-2">Login</a>
-                 
+                    <a href="<?php echo base_url();?>registration" class="btn btn-outline-dark shadow-none me-lg-3 me-2">Sign Up</a>
                     <!-- <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal"
                         data-bs-target="#RegisterModel">
                         Register
@@ -26,4 +26,31 @@
             </div>
         </div>
     </nav>
+
+    <script>
+         function alerts(type, msg, position = 'body') {
+        let bs_class = (type == 'success') ? 'alert-success' : 'alert-danger';
+        let element = document.createElement('div');
+        element.innerHTML = `
+            <div class="alert ${bs_class} alert-dismissible fade show" role="alert">
+            <strong>${msg}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            `;
+
+        if (position == 'body') {
+            document.body.append(element);
+            element.classList.add('custom-alert');
+
+        }
+        else {
+            document.getElementById(position).appendChild(element);
+        }
+        setTimeout(remAlert, 3000);
+
+    }
+    function remAlert() {
+        document.getElementsByClassName('alert')[0].remove();
+    }
+        </script>
 
