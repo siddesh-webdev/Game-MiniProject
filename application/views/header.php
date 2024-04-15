@@ -16,7 +16,7 @@
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="<?php echo base_url();?>login/loginPage" class="btn btn-outline-dark shadow-none me-lg-3 me-2">Login</a>
+                    <a href="<?php echo base_url();?>login" class="btn btn-outline-dark shadow-none me-lg-3 me-2">Login</a>
                     <a href="<?php echo base_url();?>registration" class="btn btn-outline-dark shadow-none me-lg-3 me-2">Sign Up</a>
                     <!-- <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal"
                         data-bs-target="#RegisterModel">

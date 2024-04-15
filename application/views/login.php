@@ -134,7 +134,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 url: "<?php echo base_url() ?>login/loginSubmit",
                 type: 'POST',
                 dataType: 'json',
-                clearForm: true,
+                clearForm: false,
 
                 success: function (response) {
                     if (response.status) {
@@ -147,7 +147,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     }
                 },
                 error: function (response) {
-                    alert("not done");
+                    alerts("error","Server went done try again later");
                 }
             });
         }

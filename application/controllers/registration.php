@@ -6,6 +6,7 @@ class registration extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("common");
+		$this->load->model("loginModel");
 		// $this->load->helper(array('form', 'url'));
 		// $this->load->library('password');
 
@@ -33,6 +34,25 @@ class registration extends CI_Controller
 			echo $this->common->fetch_city($this->input->post('state_id'));
 		}
 	}
+
+	public function checkEmailExist()
+	{
+		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' )
+		{
+			$email = $this->input->post("email_id");
+			$status = $this->loginModel->userExistCheck($email);
+			if(!empty($status))
+			{
+				echo "false";
+				exit;
+			}
+			else
+			{
+				echo "true";
+			}
+		
+		}
+	}
 	public function submitForm()
 	{
 		// echo"<pre>";
@@ -43,7 +63,7 @@ class registration extends CI_Controller
 
 
 			$this->form_validation->set_rules("name", "name", "trim|required");
-			$this->form_validation->set_rules("email", "email", "trim|required");
+			$this->form_validation->set_rules("email", "email", "trim|required|is_unique[user_dtl.email]");
 			$this->form_validation->set_rules("contact", "contact", "trim|required|max_length[10]");
 
 			$this->form_validation->set_rules("gender", "gender", "required");

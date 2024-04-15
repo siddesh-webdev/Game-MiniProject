@@ -64,7 +64,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Email</label>
-                                <input name="email" type="email" class="form-control shadow-none" required>
+                                <input name="email" id="email" type="email" class="form-control shadow-none" required>
                             </div>
                             <div class="col-md-4  mb-3">
                                 <label class="form-label">Phone Number</label>
@@ -164,19 +164,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script>
 
     var Vrules = {
+        //debug: true,
+        ignore: [],
         name: {
             required: true,
             // lettersonly: true
         },
         email: {
             required: true,
-            email: true
+            email: true,
+            remote:{
+                url:"<?= base_url('registration/checkEmailExist')?>",
+                type: 'post',
+                data:{
+                    email_id:function(){
+                        return $("#email").val();
+                    }
+                }
+            
+            },
+            
         },
         contact: {
             required: true,
             maxlength: 10
         },
-        picture: {
+        profile: {
             required: true,
             extension: "png|jpeg|jpg"
         },
@@ -186,34 +199,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
         password: {
             required: true
         },
-        "address[]": {
+        'address[]': {
             required: true
         },
-        "country[]": {
+        'country[]': {
             reqiured: true
         },
-        "state[]": {
+        'state[]': {
             required: true
         },
-        "city[]": {
+        'city[]': {
             required: true
         }
     };
     var msg = {
+        ignore: [],
         name: { required: "Please  enter name." },
-        email: { required: "Please enter the email" },
+        email: { required: "Please enter email",
+            remote: "This email address already exists. <a style='color:blue !important; text-decoration:none;' href='<?= base_url('login')?>'><b> click here to login </b> </a>"
+        },
         contact: { required: "Please enter the contact " },
-        picture: { required: "Please enter the profile picture" },
+        profile: { required: "Please enter the profile picture" },
         gender: { required: "please select the gender" },
         password: { required: "please enter the password" },
-        "address[]": { required: "please enter the address" },
-        "country[]": { required: "please select the country" },
-        "state[]": { required: "please select the state" },
-        "city[]": { required: "please select the city" }
+        'address[]': { required: "please enter the address" },
+        'country[]': { required: "please select the country" },
+        'state[]': { required: "please select the state" },
+        'city[]': { required: "please select the city" }
 
     };
 
-
+    // console.log(Vrules);
+    // console.log(msg);
+    
     $("#add-form").validate({
         ignore: [],
         rules: Vrules,
@@ -314,20 +332,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         //?add-form?var total_row_count =$(this).value();
         if (!$("#address_" + row_count).val()) {
-            alert("Please Enter the address first!");
+            alerts("error","Please Enter the address first!");
             return false;
         }
         if (!$("#country_" + row_count).val()) {
-            alert("please select the country");
+            alerts("error","please select the country");
             return false;
         }
         if (!$("#state_" + row_count).val()) {
-            alert("please select the state");
+            alerts("error","please select the state");
             return false;
 
         }
         if (!$("#city_" + row_count).val()) {
-            alert("please select the city ")
+            alerts("error","please select the city ")
             return false;
         }
         row_count++;
@@ -371,12 +389,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(document).on("click", ".removeaddressrow", function () {
 
         var div_row_count = $(".addaddressrow").length;
-        alert(div_row_count);
+   
         var row_count = $(this).attr("row_count");
 
 
         if (div_row_count == '1') {
-            alert("you have reached the limits");
+            alerts("error","you have reached the limits");
         }
         else {
 
