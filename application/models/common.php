@@ -47,6 +47,14 @@ class Common extends CI_Model{
         return $output;
     }
 
+    function fetch_game()
+    {
+        $this->db->order_by("gname", "ASC");
+        $query = $this->db->get("game_dtl");
+        return $query->result();
+    }
+
+
     function insertData($tbl_name, $data_array) {
 		
 		$result_id = "";

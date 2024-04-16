@@ -26,12 +26,24 @@ class dashboard extends CI_Controller{
         $this->load->view("user/footer.php");
     }
 
+    public function gameList(){
+        $this->load->view("user/dashboard");
+        $this->load->view("user/gameList");
+        $this->load->view("user/footer.php");
+    }
     public function addGame(){   
         $this->load->view("user/dashboard");
         $this->load->view("user/addGame");
         $this->load->view("user/footer.php");
     }
 
+    public function addTeam(){
+        $this->load->view("user/dashboard");
+        $data["game_dtl"] = $this->common->fetch_game();
+        $this->load->view('user/addTeam', $data);
+       
+        $this->load->view("user/footer.php");
+    }
 
     public function fetch_state()
 	{
