@@ -5,70 +5,154 @@
             <div class="col-md-6">
                 <h5 class="card-title mb-3"> Game Details</h5>
             </div>
-          
+
         </div>
 
+
         <div class="row d-flex justify-content-center">
+            <?php
+            if (!empty($game_dtl) && isset($game_dtl)) {
 
-            <form id="add-form" class="theme-form" name="add-form" enctype="multipart/form-data">
+                foreach ($game_dtl as $row) {
+                    ?>
 
-                <div class="container-fluid">
+                    <form id="edit-form" class="theme-form" name="add-form" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>user/addGame/editGameSubmit">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <input type="hidden" name ="game_id" value="<?= $row->id ?>">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Game Name</label>
+                                    <input name="gname" type="text" class="form-control shadow-none" value="<?= $row->gname ?>"
+                                        required>
+                                </div>
+                                <div class="col-md-4  mb-3">
+                                    <label class="form-label">Tournament name</label>
+                                    <input name="tname" type="text" class="form-control shadow-none" value="<?= $row->tname ?>"
+                                        required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Total Teams</label>
+                                    <input name="nteam" id="nteam" type="number" class="form-control shadow-none"
+                                        value="<?= $row->nteam ?>" required>
+                                </div>
 
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Game Name</label>
-                            <input name="gname" type="text" class="form-control shadow-none" required>
-                        </div>
-                        <div class="col-md-4  mb-3">
-                            <label class="form-label">Tournament name</label>
-                            <input name="tname" type="text" class="form-control shadow-none" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Total Teams</label>
-                            <input name="nteam" id="nteam" type="number" class="form-control shadow-none" required>
-                        </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Baner</label>
+                                    <br>
+                                    <img src="<?= $row->profile ?>" name="image" width='100px' class=" img-fluid">
+                                    <br>
+                                    <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp"
+                                        class="form-control shadow-none">
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Baner</label>
-                            <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp"
-                                class="form-control shadow-none" required>
+                                </div>
 
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Gender</label>
+                                    <select name="gender" class="form-select" aria-label="Default select example">
+                                        <option value=""><?= $row->gender ?></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Winning Price</label>
+                                    <input name="price" id="price" type="number" class="form-control shadow-none"
+                                        value="<?= $row->price ?>" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Entry Fees</label>
+                                    <input name="fees" id="fees" type="number" class="form-control shadow-none"
+                                        value="<?= $row->fees ?>" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Start Date</label>
+                                    <input name="from_date" id="from_date" type="date"
+                                        class="form-control shadow-none digits fromdate" value="<?= $row->from_date ?>"
+                                        required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">End Date</label>
+                                    <input name="to_date" id="to_date" type="date"
+                                        class="form-control shadow-none  digits todate" value="<?= $row->to_date ?>" required>
+                                </div>
+                            </div>
                         </div>
+                        <div class="text-center mt-2 my-1">
+                            <button type="submit" class="btn btn-dark shodow-none">Edit </button>
+                        </div>
+                    </form>
+                    <?php
+                }
+            } else {
+                ?>
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Gender</label>
-                            <select name="gender" class="form-select" aria-label="Default select example">
-                                <option value="">Select Gender </option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Winning Price</label>
-                            <input name="price" id="price" type="number" class="form-control shadow-none" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Entry Fees</label>
-                            <input name="fees" id="fees" type="number" class="form-control shadow-none" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Start Date</label>
-                            <input name="from_date" id="from_date" type="date"
-                                class="form-control shadow-none digits fromdate" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">End Date</label>
-                            <input name="to_date" id="to_date" type="date"
-                                class="form-control shadow-none  digits todate" required>
-                        </div>
+                <form id="add-form" class="theme-form" name="add-form" enctype="multipart/form-data">
 
+                    <div class="container-fluid">
+
+                        <div class="row">
+
+
+                            <div class="col-md-4 mb-3">
+
+
+
+                                <label class="form-label">Game Name</label>
+                                <input name="gname" type="text" class="form-control shadow-none" required>
+                            </div>
+                            <div class="col-md-4  mb-3">
+                                <label class="form-label">Tournament name</label>
+                                <input name="tname" type="text" class="form-control shadow-none" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Total Teams</label>
+                                <input name="nteam" id="nteam" type="number" class="form-control shadow-none" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Baner</label>
+                                <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp"
+                                    class="form-control shadow-none" required>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Gender</label>
+                                <select name="gender" class="form-select" aria-label="Default select example">
+                                    <option value="">Select Gender </option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Winning Price</label>
+                                <input name="price" id="price" type="number" class="form-control shadow-none" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Entry Fees</label>
+                                <input name="fees" id="fees" type="number" class="form-control shadow-none" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Start Date</label>
+                                <input name="from_date" id="from_date" type="date"
+                                    class="form-control shadow-none digits fromdate" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">End Date</label>
+                                <input name="to_date" id="to_date" type="date"
+                                    class="form-control shadow-none  digits todate" required>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="text-center mt-2 my-1">
-                    <button type="submit" class="btn btn-dark shodow-none">Add </button>
-                </div>
-            </form>
+                    <div class="text-center mt-2 my-1">
+                        <button type="submit" class="btn btn-dark shodow-none">Add </button>
+                    </div>
+                </form>
+
+            <?php } ?>
+
         </div>
     </div>
 </div>

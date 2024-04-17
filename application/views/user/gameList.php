@@ -5,7 +5,8 @@
             <h3 class="mb-2">Game</h3>
         </div>
         <div class="col-md-6">
-            <a href="<?php echo base_url();?>user/dashboard/addGame" class="btn btn-outline-dark shadow-none me-lg-3 me-2" style="float:right;"> Add Game</a>
+            <a href="<?php echo base_url(); ?>user/dashboard/addGame"
+                class="btn btn-outline-dark shadow-none me-lg-3 me-2" style="float:right;"> Add Game</a>
         </div>
         <div class="col">
 
@@ -26,10 +27,59 @@
 
 
                                     <th scope="col">Action</th>
+                                    <th scope="col">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="table-data">
+                            <?php
+                            $i = 1;
+                            foreach ($game_dtl as $row) {
+                                ?>
+                                                <tr>
+                                                <td><?= $i ?></td>
+                                                <td>
+                                                     <b><?= $row->gname ?></b>
+                                                </td>
+                                                <td>
+                                                <img src='<?= $row->profile ?>' width='55px'>
+                                                <br>
+                                                     <?= $row->tname ?>
+                                                </td>
+                                                <td>
+                                                <b><?= $row->nteam ?></b>
+                                                </td>
+                                                <td>
+                                                    <b><?= $row->from_date ?></b> 
+                                                <br>
+                                                </td>
+                                                <td>
+                                                    <b><?= $row->to_date ?></b> 
+                                                </td>
+                             
+                                                <td>
+                                                    <form method="post" action="<?php echo base_url();?>user/dashboard/editGame">
+                                                        <input type="hidden" name="game_id" value="<?= $row->id ?>" id="game_id">
+                                                        <button type='submit' class='btn mb-2 text-white btn-sm fw-bold btn-primary shadow-none' >
+                                                            <i class='bi bi-pencil-square'></i> Edit
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td>    
+                                                    <div class='form-check form-switch'>
+                                               
+                                                        <form>
+                                                    <!-- <input onchange='upd_shutdown(this.value,)' class='form-check-input' type='checkbox' id='shutdown-toggle'> -->
+                                                        <input name="shutdown" <?php if($row->shutdown ==1){echo "checked"; }?> class='form-check-input' type='checkbox' id='shutdown' game="<?= $row->id ?>" >
+                                                    </form>
+                                              
+                                                    </div>
+                                                <td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                            }
 
+                            ?>
                             </tbody>
                         </table>
                     </div>
@@ -50,20 +100,102 @@
 
 <script>
 
+$(document).on("change","#shutdown",function(){
 
-$(document).ready(function(){
+    var game_id =  $(this).attr("game");
+   
+    // var value= $('input[name="shutdown"]:checked').val();
     $.ajax({
-        url:"<?php echo base_url();?>user/gameList",
-        type: "post",
-        success:function(response){
+      url:"<?php echo base_url(); ?>user/gameList/shutdown",
+      type:"post",
+      data:{
+        "game_id":game_id,
+    
+           },
+      dataType:'json',
+        success: function(response){
+            console.log(response);
+            alerts('success',response.message);
             
-             let data = JSON.parse(response);
-            document.getElementById('table-data').innerHTML = data.table_data;
         }
 
-    })
-
+    });
 });
+
+
+// function edit_game(id){
+
+//     $.ajax({
+//         url:"<?php echo base_url();?>user/dashboard/editGame",
+//         type:'post',
+//         data:{'game_id':id},
+//         success:function(){
+//             window.location ="<?php echo base_url('user/dashboard/editGame') ?>";
+//         }
+//     });
+  
+// }
+
+
+
+
+
+
+
+    // $(document).ready(function () {
+
+    //     $.ajax({
+    //         url: "<?php echo base_url(); ?>user/gameList",
+    //         type: "post",
+    //         success: function (response) {
+
+    //             let data = JSON.parse(response);
+    //             document.getElementById('table-data').innerHTML = data.table_data;
+
+    //             let shutdown_toggle =document.getElementById("shutdown-toggle");
+
+    //             if(data.shutdown == 0)
+    //             {
+    //             alert("off");
+    //             shutdown_toggle.checked = false;
+    //             shutdown_toggle.value = 0;
+    //             }
+    //             else{
+    //              alert("onn");   
+    //             shutdown_toggle.checked = true;
+    //             shutdown_toggle.value = 1;
+    //             }
+    //         }
+
+    //     })
+
+    // });
+
+    // function upd_shutdown(val,id) {
+
+    //     // let ids = document.getElementById("shutdown-toggle");
+
+    //     $.ajax({
+    //         url:"<?php echo base_url(); ?>user/gameList/shutdown",
+    //         type:'post',
+    //         data: {"val":val,"id":id},
+    //         success: function()
+    //         {
+    //             // let general_data = JSON.parse(this.responseText); 
+
+    //             // if(this.responseText == 1 && general_data.shutdown==0)
+    //             // {
+    //             // alerts('success','Sites has been shutdown!');
+                
+    //             // }
+    //             // else
+    //             // {
+    //             // alerts('success','Shutdown mode is off..!');
+    //             // }
+    //         }
+    //     });
+    // }
+
 
     // $("#add-form").validate({
 

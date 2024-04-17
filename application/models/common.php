@@ -68,6 +68,20 @@ class Common extends CI_Model{
 		}
 	}
 
+    function updateData($game_id,$tbl_name,$data_array){
+        // $result_id = "";
+        $this->db->where("id",$game_id);
+		$q=$this->db->update($tbl_name, $data_array);
+        
+       if($q) {
+        return true;}
+
+        else{
+            return false;
+        }
+		
+    }
+
     
 }
 

@@ -5,6 +5,7 @@ class dashboard extends CI_Controller{
     public function __construct(){  
         parent::__construct();
         $this->load->model("common");
+        $this->load->model('gameListModel');
         checklogin();
     }
 
@@ -27,16 +28,25 @@ class dashboard extends CI_Controller{
     }
 
     public function gameList(){
+
         $this->load->view("user/dashboard");
-        $this->load->view("user/gameList");
+        $data["game_dtl"] = $this->gameListModel->get_all_games();
+        $this->load->view("user/gameList",$data);
         $this->load->view("user/footer.php");
     }
     public function addGame(){   
         $this->load->view("user/dashboard");
+  
         $this->load->view("user/addGame");
         $this->load->view("user/footer.php");
     }
 
+    public function editGame(){
+        $this->load->view("user/dashboard");
+        $data["game_dtl"] = $this->gameListModel->get_games($_POST["game_id"]);
+        $this->load->view("user/addGame",$data);
+        $this->load->view("user/footer.php");
+    }
     public function addTeam(){
         $this->load->view("user/dashboard");
         $data["game_dtl"] = $this->common->fetch_game();
