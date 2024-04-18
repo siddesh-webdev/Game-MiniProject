@@ -232,24 +232,14 @@
                 <p>Menu</p>
                 <li class="active">
                     <a href="<?php echo base_url();?>user/dashboard">Home</a>
-                    <!-- <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul> -->
+               
                 </li>
                 <li>
                     <a href="<?php echo base_url();?>user/dashboard/addPlayer">Add Player</a>
                 </li>
              
                 <li>
-                    <a href="<?php echo base_url();?>user/dashboard/addTeam">Add Team </a>
+                    <a href="<?php echo base_url();?>user/dashboard/teamList">Add Team </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url();?>user/dashboard/gameList">Add Game </a>

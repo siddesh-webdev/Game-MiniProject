@@ -51,7 +51,7 @@ class login extends CI_Controller
 				exit;
 				// $this->session->set_flashdata("login_failure_activation", "Your account has not been activated yet.");
 			} else {
-				setcookie("user_details", serialize($user_exist));
+				// setcookie("user_details", serialize($user_exist));
 
 				// echo "<pre>";
 				// print_r("password matched success");
@@ -62,6 +62,7 @@ class login extends CI_Controller
 				$data["email"] = $this->input->post("email");
 				$data["password"] = $this->input->post("password");
 				$this->session->set_userdata($data);
+
 
 				$link = base_url('user/dashboard');
 				echo json_encode(array('status' => true, 'message' => "success", 'link' => $link));

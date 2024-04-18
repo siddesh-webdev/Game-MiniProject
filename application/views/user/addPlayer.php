@@ -95,6 +95,9 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script src="https://malsup.github.io/jquery.form.js"></script>
+
 <script>
     $(document).on("change", ".country", function () {
         var country_id = $(this).val();
@@ -218,4 +221,117 @@
 
             }
     });
+
+
+    
+    var Vrules = {
+        //debug: true,
+        ignore: [],
+        name: {
+            required: true,
+           
+        },
+        email: {
+            required: true,
+            email: true,
+            // remote:{
+            //     url:"<?= base_url('registration/checkEmailExist')?>",
+            //     type: 'post',
+            //     data:{
+            //         email_id:function(){
+            //             return $("#email").val();
+            //         }
+            //     }
+            
+            // },
+            
+        },
+        contact: {
+            required: true,
+            maxlength: 10
+        },
+        profile: {
+            required: true,
+            // extension: "png|jpeg|jpg"
+        },
+        gender: {
+            required: true
+        },
+
+        'address[]': {
+            required: true
+        },
+        'country[]': {
+            reqiured: true
+        },
+        'state[]': {
+            required: true
+        },
+        'city[]': {
+            required: true
+        }
+    };
+    var msg = {
+        ignore: [],
+        name: { required: "Please  enter name." },
+        email: { required: "Please enter email",
+            // remote: "This email address already exists. <a style='color:blue !important; text-decoration:none;' href='<?= base_url('login')?>'><b> click here to login </b> </a>"
+        },
+        contact: { required: "Please enter the contact " },
+        profile: { required: "Please enter the profile picture" },
+        gender: { required: "please select the gender" },
+     
+        'address[]': { required: "please enter the address" },
+        'country[]': { required: "please select the country" },
+        'state[]': { required: "please select the state" },
+        'city[]': { required: "please select the city" }
+
+    };
+
+    // console.log(Vrules);
+    // console.log(msg);
+    
+    $("#add-form").validate({
+        ignore: [],
+        rules: Vrules,
+        messages: msg,
+
+        submitHandler: function (form) {
+            var act = "<?php echo base_url() ?>user/addPlayer/addPlayerSub";
+            $("#add-form").ajaxSubmit({
+                url: act,
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                clearForm: false,
+                success: function (response) {
+                    if (response.status) {
+                        alerts('success', response.message);
+
+                        setTimeout(function () {
+
+                            window.location = "<?php echo base_url('user/dashboard') ?>";
+
+                        }, 1000);
+
+                    } else {
+
+                        alerts('error', "Server Down");
+                    }
+
+                },
+                error: function (response) {
+                    alert(response);
+                    console.log(response);
+                },
+            });
+        }
+    });
+
+
+    
 </script>
+
+
+
+

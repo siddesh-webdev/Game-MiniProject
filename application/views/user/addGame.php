@@ -15,11 +15,11 @@
 
                 foreach ($game_dtl as $row) {
                     ?>
-
-                    <form id="edit-form" class="theme-form" name="add-form" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>user/addGame/editGameSubmit">
+                    <!-- <form id="edit-form" class="theme-form" name="add-form" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>user/addGame/editGameSubmit"> -->
+                    <form id="add-form" class="theme-form" name="add-form"  enctype="multipart/form-data" >
                         <div class="container-fluid">
                             <div class="row">
-                                <input type="hidden" name ="game_id" value="<?= $row->id ?>">
+                                <input type="hidden" name ="game_id" id="game_id" value="<?= $row->id ?>">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Game Name</label>
                                     <input name="gname" type="text" class="form-control shadow-none" value="<?= $row->gname ?>"
@@ -42,17 +42,17 @@
                                     <img src="<?= $row->profile ?>" name="image" width='100px' class=" img-fluid">
                                     <br>
                                     <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp"
-                                        class="form-control shadow-none">
+                                        class="form-control shadow-none" value="<?= $row->profile?>">
 
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Gender</label>
                                     <select name="gender" class="form-select" aria-label="Default select example">
-                                        <option value=""><?= $row->gender ?></option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Others">Others</option>
+                                        <option value="<?=$row->gender?>" selected ><?= $row->gender ?></option>
+                                        <option value=1>Male</option>
+                                         <option value=2>Female</option>
+                                        <option value=3>Others</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4 mb-3">
@@ -88,16 +88,9 @@
                 ?>
 
                 <form id="add-form" class="theme-form" name="add-form" enctype="multipart/form-data">
-
                     <div class="container-fluid">
-
                         <div class="row">
-
-
                             <div class="col-md-4 mb-3">
-
-
-
                                 <label class="form-label">Game Name</label>
                                 <input name="gname" type="text" class="form-control shadow-none" required>
                             </div>
@@ -121,9 +114,9 @@
                                 <label class="form-label">Gender</label>
                                 <select name="gender" class="form-select" aria-label="Default select example">
                                     <option value="">Select Gender </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Others">Others</option>
+                                    <option value=1>Male</option>
+                                    <option value=2>Female</option>
+                                    <option value=3>Others</option>
                                 </select>
                             </div>
                             <div class="col-md-4 mb-3">

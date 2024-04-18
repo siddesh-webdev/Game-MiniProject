@@ -2,12 +2,11 @@
 <div class="container" id="main-content">
     <div class="row">
         <div class="col-md-6">
-            <h3 class="mb-2">Game</h3>
-          
+            <h3 class="mb-2">Team</h3>
         </div>
         <div class="col-md-6">
-            <a href="<?php echo base_url(); ?>user/dashboard/addGame"
-                class="btn btn-outline-dark shadow-none me-lg-3 me-2" style="float:right;"> Add Game</a>
+            <a href="<?php echo base_url(); ?>user/dashboard/addTeam"
+                class="btn btn-outline-dark shadow-none me-lg-3 me-2" style="float:right;"> Add Team</a>
         </div>
         <div class="col">
 
@@ -19,12 +18,12 @@
                             <thead>
                                 <tr class="bg-dark text-light">
                                     <th scope="col">#</th>
+                                    <th scope="col">Team Name</th>
+                                   <!-- pic ,tournament name, -->
+                                    <th scope="col">Team Banner</th>
                                     <th scope="col">Game</th>
-                                    <th scope="col">Tournament Name</th> <!-- pic ,tournament name, -->
-                                    <th scope="col">Teams</th>
-                                    <th scope="col">start date</th>
-                                    <th scope="col">end date</th>
-                                    <!-- start date end date entry fees price in details gender -->
+                                   
+                                
 
 
                                     <th scope="col">Action</th>
@@ -34,33 +33,26 @@
                             <tbody id="table-data">
                             <?php
                             $i = 1;
-                           
-                            foreach ($game_dtl as $row) {
+                            foreach ($team_dtl as $row) {
                                 ?>
                                                 <tr>
                                                 <td><?= $i ?></td>
                                                 <td>
-                                                     <b><?= $row->gname ?></b>
+                                                     <b><?= $row->tname ?></b>
                                                 </td>
                                                 <td>
                                                 <img src='<?= $row->profile ?>' width='55px'>
                                                 <br>
-                                                     <?= $row->tname ?>
+                                                    <b>Captain:</b><?= $row->cname ?>
                                                 </td>
                                                 <td>
-                                                <b><?= $row->nteam ?></b>
+                                                <b><?= $row->game_name?></b>
                                                 </td>
-                                                <td>
-                                                    <b><?= $row->from_date ?></b> 
-                                                <br>
-                                                </td>
-                                                <td>
-                                                    <b><?= $row->to_date ?></b> 
-                                                </td>
+                                              
                              
                                                 <td>
-                                                    <form method="post" action="<?php echo base_url();?>user/dashboard/addGame">
-                                                        <input type="hidden" name="game_id" value="<?= $row->id ?>" id="game_id">
+                                                    <form method="post" action="<?php echo base_url();?>user/dashboard/addTeam">
+                                                        <input type="hidden" name="team_id" value="<?= $row->id ?>" id="team_id">
                                                         <button type='submit' class='btn mb-2 text-white btn-sm fw-bold btn-primary shadow-none' >
                                                             <i class='bi bi-pencil-square'></i> Edit
                                                         </button>
@@ -70,7 +62,6 @@
                                                     <div class='form-check form-switch'>
                                                
                                                         <form>
-                                                            <!-- <input type="hidden" value="<?= $_SESSION["id"] ?>" id="sid" name="sid" sess="<?= $_SESSION["id"] ?>" > -->
                                                     <!-- <input onchange='upd_shutdown(this.value,)' class='form-check-input' type='checkbox' id='shutdown-toggle'> -->
                                                         <input name="shutdown" <?php if($row->shutdown ==1){echo "checked"; }?> class='form-check-input' type='checkbox' id='shutdown' game="<?= $row->id ?>" >
                                                     </form>
@@ -103,36 +94,16 @@
 
 <script>
 
-// $(document).ready(function(){
-
-//     var sesson_id = $("#sid").val();
-//     var game_id =  $(this).attr("sess");
-//     alert(sesson_id);
-//     alert(game_id);
-//     $.ajax({
-//       url:"<?php echo base_url(); ?>user/gameList/shutdown",
-//       type:"post",
-//       data:{
-//         "sesson_id":sesson_id,
-    
-//            },
-           
-        
-//         });
-// });
-
-
 $(document).on("change","#shutdown",function(){
 
-    var game_id =  $(this).attr("game");
+    var team_id =  $(this).attr("game");
    
     // var value= $('input[name="shutdown"]:checked').val();
     $.ajax({
-      url:"<?php echo base_url(); ?>user/gameList/shutdown",
+      url:"<?php echo base_url(); ?>user/teamList/shutdown",
       type:"post",
       data:{
-        "game_id":game_id,
-    
+        "team_id":team_id,
            },
       dataType:'json',
         success: function(response){
@@ -145,8 +116,7 @@ $(document).on("change","#shutdown",function(){
 });
 
 
-
-// function edit_game(id){[]
+// function edit_game(id){
 
 //     $.ajax({
 //         url:"<?php echo base_url();?>user/dashboard/editGame",

@@ -1,21 +1,21 @@
 <?php
 
-class GameListModel extends CI_Model
-{
 
-    public function __construct()
-    {
+class TeamListModel extends CI_Model 
+{
+    public function __construct(){  
         parent::__construct();
+     
+        
     }
 
+    public function get_all_teams(){
 
-    public function get_all_games()
-    {
         $id = $this->session->userdata("id");
 
         $query = $this->db->select('*')
             ->where('user_id', $id)
-            ->from("game_dtl")
+            ->from("team_dtl")
             ->get();
 
         if ($query->num_rows() > 0) {
@@ -25,12 +25,22 @@ class GameListModel extends CI_Model
         }
     }
 
+    public function fetch_gamename($id)
+    {
+        $query = $this->db->select('*')
+            ->where('id', $id)
+            ->from("game_dtl")
+            ->get();
+            return $query->row()->gname;
+    }
+
+    
     public function shutdown($value, $game_id)
     {
 
         $this->db->where('id', $game_id);
         $this->db->set('shutdown', $value);
-        $result = $this->db->update('game_dtl');
+        $result = $this->db->update('team_dtl');
         return $result;
 
     }
@@ -39,7 +49,7 @@ class GameListModel extends CI_Model
     {
 
         $query = $this->db->select('shutdown')
-            ->from('game_dtl')
+            ->from('team_dtl')
             ->where('id', $game_id)
             ->get();
 
@@ -48,10 +58,10 @@ class GameListModel extends CI_Model
 
     }
 
-    public function get_games($id)
+    public function get_teams($id)
     {
         $query = $this->db->select('*')
-            ->from("game_dtl")
+            ->from("team_dtl")
             ->where('id', $id)
 
             ->get();
@@ -62,5 +72,7 @@ class GameListModel extends CI_Model
             return null;
         }
     }
-
 }
+
+
+?>

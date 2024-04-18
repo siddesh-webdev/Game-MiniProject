@@ -191,7 +191,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         },
         profile: {
             required: true,
-            extension: "png|jpeg|jpg"
+            // extension: "png|jpeg|jpg"
         },
         gender: {
             required: true
